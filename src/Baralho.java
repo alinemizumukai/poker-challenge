@@ -1,31 +1,23 @@
 import java.util.Random;
 
 public class Baralho {
-    final int QTDE_NAIPE = 13;
+    final int QTDE_NAIPES = 4;
+    final int QTDE_POR_NAIPE = 13;
     Carta[] cartas = new Carta[52];
 
     public Baralho(){
-        for(int i = 0; i < cartas.length; i++){
-            if(i < QTDE_NAIPE * 1){
-                cartas[i]= new Carta(((i+1) - QTDE_NAIPE * 0) + "", "♦");
-            }else if(i < QTDE_NAIPE * 2){
-                cartas[i] = new Carta(((i+1) - QTDE_NAIPE * 1) + "", "♠");
-            }else if(i < QTDE_NAIPE * 3){
-                cartas[i] = new Carta(((i+1) - QTDE_NAIPE * 2) + "", "♥");
-            }else if(i < QTDE_NAIPE * 4){
-                cartas[i] = new Carta(((i+1) - QTDE_NAIPE * 3) + "", "♣");
+        String[] nomes = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
+        String[] naipes = {"♦", "♠", "♥", "♣"};
+        int index = 0;
+        int contadorNaipe = 0;
+        while(contadorNaipe < QTDE_NAIPES){
+            int contadorNome = 0;
+            while (contadorNome < QTDE_POR_NAIPE){
+                cartas[index] = new Carta(nomes[contadorNome], naipes[contadorNaipe]);
+                contadorNome++;
+                index++;
             }
-
-            switch (cartas[i].getNome()){
-                case "1":   cartas[i].setNome("A");
-                            break;
-                case "11":  cartas[i].setNome("J");
-                            break;
-                case "12":  cartas[i].setNome("Q");
-                            break;
-                case "13":  cartas[i].setNome("K");
-                            break;
-            }
+            contadorNaipe++;
         }
     }
 
@@ -44,10 +36,10 @@ public class Baralho {
         String[] temp = new String[quantidade];
 
         for (int i = 0; i < quantidade; i++){
-            for(int j=0; j < cartas.length; j++){
-                if(!cartas[j].isEmJogo()){
-                    temp[i] = cartas[j].getNome() + cartas[j].getNaipe();
-                    cartas[j].setEmJogo(true);
+            for(var carta : cartas){
+                if(!carta.isEmJogo()){
+                    temp[i] = carta.getNome() + carta.getNaipe();
+                    carta.setEmJogo(true);
                     break;
                 }
             }
@@ -58,17 +50,17 @@ public class Baralho {
     public boolean temCarta(int quantidade){
         int mesa = 5;
         int contador = 0;
-        for(int i = 0; i < cartas.length; i++ ){
-            if (!cartas[i].isEmJogo())
+        for(var carta : cartas){
+            if (!carta.isEmJogo())
                 contador++;
         }
         return contador >= (quantidade + mesa);
     }
 
     public void imprimirBaralho(){
-        for(int i = 0; i < cartas.length; i++ ){
-            if (!cartas[i].isEmJogo())
-                System.out.print(cartas[i].getNome() + cartas[i].getNaipe() + "  ");
+        for(var carta : cartas){
+            if (!carta.isEmJogo())
+                System.out.print(carta.getNome() + carta.getNaipe() + "  ");
         }
         System.out.println();
     }

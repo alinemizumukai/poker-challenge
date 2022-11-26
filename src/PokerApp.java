@@ -30,30 +30,30 @@ public class PokerApp {
             double maiorAposta = 0;
             double totalAposta = 0;
             do {
-                for (int i = 0; i < jogadores.length; i++) {
-                    if(jogadores[i].isEmJogo()){
+                for (var jogador : jogadores) {
+                    if(jogador.isEmJogo()){
                         do{
-                            System.out.println("Olá, " + jogadores[i].getNome() + "! Até o momento, você apostou R$ " + jogadores[i].getAposta() + " -> Valor mínimo = R$ " + maiorAposta);
+                            System.out.println("Olá, " + jogador.getNome() + "! Até o momento, você apostou R$ " + jogador.getAposta() + " -> Valor mínimo = R$ " + maiorAposta);
                             System.out.println("Deseja continuar nesta rodada? [S]: sim ou [N] não");
                             resposta = scan.next();
                         } while ( !(resposta.equals("S") || resposta.equals("s") || resposta.equals("N") || resposta.equals("n")) );
 
                         if (resposta.equals("S") || resposta.equals("s")) {
                             do{
-                                System.out.println("Você deve apostar no mínimo R$ " + (maiorAposta - jogadores[i].getAposta()));
+                                System.out.println("Você deve apostar no mínimo R$ " + (maiorAposta - jogador.getAposta()));
                                 System.out.println("Por gentileza, informe o valor da sua aposta: ");
                                 aposta = scan.nextDouble();
-                            } while((aposta + jogadores[i].getAposta()) < maiorAposta);
+                            } while((aposta + jogador.getAposta()) < maiorAposta);
 
-                            jogadores[i].setAposta(aposta);
+                            jogador.setAposta(aposta);
                             totalAposta += aposta;
-                            if (maiorAposta < jogadores[i].getAposta()) {
-                                maiorAposta = jogadores[i].getAposta();
+                            if (maiorAposta < jogador.getAposta()) {
+                                maiorAposta = jogador.getAposta();
                             }
                         }
                         else {
-                            System.out.println(jogadores[i].getNome() + " desistiu.");
-                            jogadores[i].setEmJogo(false);
+                            System.out.println(jogador.getNome() + " desistiu.");
+                            jogador.setEmJogo(false);
                             imprimirJogadoresAtivos(jogadores);
                         }
                     }
@@ -84,16 +84,16 @@ public class PokerApp {
 
     public static void imprimirJogadoresAtivos(Jogador[] jogadores){
         System.out.println("Participando do jogo: ");
-        for (int i = 0; i < jogadores.length; i++){
-            if(jogadores[i].isEmJogo())
-                System.out.println(jogadores[i].getNome() + " -> " + Arrays.toString(jogadores[i].getCartas()) + " -> Aposta: R$ " + jogadores[i].getAposta());
+        for (var jogador : jogadores){
+            if(jogador.isEmJogo())
+                System.out.println(jogador.getNome() + " -> " + Arrays.toString(jogador.getCartas()) + " -> Aposta: R$ " + jogador.getAposta());
         }
     }
 
     public static int jogadoresAtivos(Jogador[] jogadores){
         int ativos = 0;
-        for (int i = 0; i < jogadores.length; i++){
-            if(jogadores[i].isEmJogo())
+        for (var jogador : jogadores){
+            if(jogador.isEmJogo())
                 ativos++;
         }
         return ativos;
@@ -102,9 +102,9 @@ public class PokerApp {
     public static boolean apostasDesiguais (Jogador[] jogadores, double maiorAposta){
         double somaApostasAtivas = 0.0;
         int quantidade = jogadoresAtivos(jogadores);
-        for (int i = 0; i < jogadores.length; i++){
-            if(jogadores[i].isEmJogo())
-                somaApostasAtivas += jogadores[i].getAposta();
+        for (var jogador : jogadores){
+            if(jogador.isEmJogo())
+                somaApostasAtivas += jogador.getAposta();
         }
         return somaApostasAtivas / quantidade < maiorAposta;
     }
