@@ -18,12 +18,14 @@ public class PokerApp {
             if(!jogo.temCarta(qtdeJogadores * 2))
                 throw new Exception("Não há cartas suficientes para essa quantidade de jogadores.");
 
+            System.out.println("\n***** Início da rodada *****\n");
+            Rodada rodada = new Rodada();
             jogo.embaralhar();
 
             for (int i = 0; i < jogadores.length; i++){
                 jogadores[i] = new Jogador("Jogador " + (i+1), jogo.darCartas(2));
             }
-            imprimirJogadoresAtivos(jogadores);
+            rodada.imprimirJogadoresAtivos(jogadores);
 
             String resposta;
             double aposta;
@@ -33,7 +35,7 @@ public class PokerApp {
                 for (var jogador : jogadores) {
                     if(jogador.isEmJogo()){
                         do{
-                            System.out.println("Olá, " + jogador.getNome() + "! Até o momento, você apostou R$ " + jogador.getAposta() + " -> Valor mínimo = R$ " + maiorAposta);
+                            System.out.println("\nOlá, " + jogador.getNome() + "! Até o momento, você apostou R$ " + jogador.getAposta() + " -> Valor mínimo = R$ " + maiorAposta);
                             System.out.println("Deseja continuar nesta rodada? [S]: sim ou [N] não");
                             resposta = scan.next();
                         } while ( !(resposta.equals("S") || resposta.equals("s") || resposta.equals("N") || resposta.equals("n")) );
@@ -54,58 +56,32 @@ public class PokerApp {
                         else {
                             System.out.println(jogador.getNome() + " desistiu.");
                             jogador.setEmJogo(false);
-                            imprimirJogadoresAtivos(jogadores);
+                            rodada.imprimirJogadoresAtivos(jogadores);
                         }
                     }
                 }
-            } while (apostasDesiguais(jogadores, maiorAposta));
+            } while (rodada.apostasDesiguais(jogadores, maiorAposta));
 
-            System.out.println("Apostas finalizadas!!");
-            imprimirJogadoresAtivos(jogadores);
+            System.out.println("\n***** Apostas finalizadas!!! *****");
+            rodada.imprimirJogadoresAtivos(jogadores);
 
-            if(jogadoresAtivos(jogadores) > 1){
-                System.out.println("Cartas na mesa: ");
+            if(rodada.jogadoresAtivos(jogadores) > 1){
+                System.out.println("\n***** Cartas na mesa *****");
                 System.out.println(Arrays.toString(jogo.darCartas(5)));
             }
 
-            System.out.println("Qual jogador ganhou?");
+            System.out.println("\nQual jogador ganhou?");
             int ganhador = scan.nextInt();
             System.out.println("O Jogador " + ganhador + " ganhou R$ " + totalAposta + " nesta rodada.");
 
             scan.close();
 
-            System.out.println("Conferência do restante do baralho: ");
+            System.out.println("\n***** Fim da Rodada *****");
+            System.out.println("\nConferência das cartas que restam no baralho: ");
             jogo.imprimirBaralho();
 
         }catch (Exception ex){
             System.out.println("Ocorreu um erro: " + ex);
         }
-    }
-
-    public static void imprimirJogadoresAtivos(Jogador[] jogadores){
-        System.out.println("Participando do jogo: ");
-        for (var jogador : jogadores){
-            if(jogador.isEmJogo())
-                System.out.println(jogador.getNome() + " -> " + Arrays.toString(jogador.getCartas()) + " -> Aposta: R$ " + jogador.getAposta());
-        }
-    }
-
-    public static int jogadoresAtivos(Jogador[] jogadores){
-        int ativos = 0;
-        for (var jogador : jogadores){
-            if(jogador.isEmJogo())
-                ativos++;
-        }
-        return ativos;
-    }
-
-    public static boolean apostasDesiguais (Jogador[] jogadores, double maiorAposta){
-        double somaApostasAtivas = 0.0;
-        int quantidade = jogadoresAtivos(jogadores);
-        for (var jogador : jogadores){
-            if(jogador.isEmJogo())
-                somaApostasAtivas += jogador.getAposta();
-        }
-        return somaApostasAtivas / quantidade < maiorAposta;
     }
 }
