@@ -9,8 +9,9 @@ public class Rodada {
         System.out.println("\nParticipantes da rodada: ");
         for (var jogador : jogadores){
             if(jogador.isEmJogo())
-                System.out.println(jogador.getNome() + " -> " + Arrays.toString(jogador.getCartas()) + " -> Aposta: R$ " + jogador.getAposta());
+                System.out.printf("\n%s -> %s -> Aposta: R$ %.2f", jogador.getNome(), Arrays.toString(jogador.getCartas()), jogador.getAposta());
         }
+        System.out.println();
     }
 
     public int jogadoresAtivos(Jogador[] jogadores){

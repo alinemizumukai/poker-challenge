@@ -35,15 +35,15 @@ public class PokerApp {
                 for (var jogador : jogadores) {
                     if(jogador.isEmJogo()){
                         do{
-                            System.out.println("\nOlá, " + jogador.getNome() + "! Até o momento, você apostou R$ " + jogador.getAposta() + " -> Valor mínimo = R$ " + maiorAposta);
-                            System.out.println("Deseja continuar nesta rodada? [S]: sim ou [N] não");
+                            System.out.printf("\nOlá, %s! Até o momento, você apostou R$ %.2f  -> Valor mínimo = R$ %.2f", jogador.getNome(), jogador.getAposta(), maiorAposta);
+                            System.out.println("\nDeseja continuar nesta rodada? [S]: sim ou [N] não");
                             resposta = scan.next();
                         } while ( !(resposta.equals("S") || resposta.equals("s") || resposta.equals("N") || resposta.equals("n")) );
 
                         if (resposta.equals("S") || resposta.equals("s")) {
                             do{
-                                System.out.println("Você deve apostar no mínimo R$ " + (maiorAposta - jogador.getAposta()));
-                                System.out.println("Por gentileza, informe o valor da sua aposta: ");
+                                System.out.printf("Você deve apostar no mínimo R$ %.2f", (maiorAposta - jogador.getAposta()));
+                                System.out.println("\nPor gentileza, informe o valor da sua aposta: ");
                                 aposta = scan.nextDouble();
                             } while((aposta + jogador.getAposta()) < maiorAposta);
 
@@ -72,11 +72,11 @@ public class PokerApp {
 
             System.out.println("\nQual jogador ganhou?");
             int ganhador = scan.nextInt();
-            System.out.println("O Jogador " + ganhador + " ganhou R$ " + totalAposta + " nesta rodada.");
+            System.out.printf("\nO Jogador %s ganhou R$ %.2f nesta rodada.", ganhador, totalAposta);
 
             scan.close();
 
-            System.out.println("\n***** Fim da Rodada *****");
+            System.out.println("\n\n***** Fim da Rodada *****");
             System.out.println("\nConferência das cartas que restam no baralho: ");
             jogo.imprimirBaralho();
 

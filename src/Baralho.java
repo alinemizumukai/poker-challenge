@@ -1,8 +1,6 @@
 import java.util.Random;
 
 public class Baralho {
-    final int QTDE_NAIPES = 4;
-    final int QTDE_POR_NAIPE = 13;
     Carta[] cartas = new Carta[52];
 
     public Baralho(){
@@ -10,9 +8,9 @@ public class Baralho {
         String[] naipes = {"♦", "♠", "♥", "♣"};
         int index = 0;
         int contadorNaipe = 0;
-        while(contadorNaipe < QTDE_NAIPES){
+        while(contadorNaipe < naipes.length){
             int contadorNome = 0;
-            while (contadorNome < QTDE_POR_NAIPE){
+            while (contadorNome < nomes.length){
                 cartas[index] = new Carta(nomes[contadorNome], naipes[contadorNaipe]);
                 contadorNome++;
                 index++;
